@@ -30,10 +30,10 @@ func deleteTimeLine(api *anaconda.TwitterApi, v url.Values) {
 
 func d(w http.ResponseWriter, r *http.Request) {
 	err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error loading .env file")
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
-    consumer_key := os.Getenv("CONSUMER_KEY")
+	consumer_key := os.Getenv("CONSUMER_KEY")
 	consumer_secret := os.Getenv("CONSUMER_SECRET")
 	accsess_token := os.Getenv("ACCESS_TOKEN")
 	accsess_token_secret := os.Getenv("ACCESS_TOKEN_SECRET")
@@ -41,14 +41,14 @@ func d(w http.ResponseWriter, r *http.Request) {
 	anaconda.SetConsumerSecret(consumer_secret)
 	api := anaconda.NewTwitterApi(accsess_token, accsess_token_secret)
 
-    v := url.Values{}
-    v.Set("count", "200")
+	v := url.Values{}
+	v.Set("count", "200")
 
 	tweets, err := api.GetUserTimeline(v)
 	if err != nil {
 		panic(err)
 	}
-    for _, tweet := range tweets {
+	for _, tweet := range tweets {
 		api.DeleteTweet(tweet.Id, true)
 	}
 }
