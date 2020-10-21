@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"net/http"
+	"fmt"
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/joho/godotenv"
@@ -15,16 +16,6 @@ func main() {
 	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
-	}
-}
-
-func deleteTimeLine(api *anaconda.TwitterApi, v url.Values) {
-	tweets, err := api.GetUserTimeline(v)
-	if err != nil {
-		panic(err)
-	}
-	for _, tweet := range tweets {
-		api.DeleteTweet(tweet.Id, true)
 	}
 }
 
@@ -49,6 +40,8 @@ func d(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	for _, tweet := range tweets {
-		api.DeleteTweet(tweet.Id, true)
+		if tweet.InReplyToStatusID != 0 {
+			api.DeleteTweet(tweet.Id, true)
+		}
 	}
 }
