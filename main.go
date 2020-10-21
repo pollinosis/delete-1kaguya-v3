@@ -40,7 +40,7 @@ func d(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	for _, tweet := range tweets {
-		if tweet.InReplyToStatusID != 0 {
+		if tweet.InReplyToStatusID == 0 {
 			api.DeleteTweet(tweet.Id, true)
 		}
 	}
