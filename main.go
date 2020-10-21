@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"net/http"
-	"fmt"
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/joho/godotenv"
